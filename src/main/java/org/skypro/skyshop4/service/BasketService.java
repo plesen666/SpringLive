@@ -1,15 +1,13 @@
 package org.skypro.skyshop4.service;
 
+import org.skypro.skyshop4.exeption.NoSuchProductException;
 import org.skypro.skyshop4.model.basket.BasketItem;
 import org.skypro.skyshop4.model.basket.ProductBasket;
 import org.skypro.skyshop4.model.basket.UserBasket;
 import org.skypro.skyshop4.model.product.Product;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BasketService {
@@ -25,16 +23,16 @@ public class BasketService {
         if (storageService.getProductById(id).isPresent()) {
             productBasket.addProductBasket(id);
         } else {
-            storageService.getProductById(id).orElseThrow(() -> new IllegalArgumentException("Продукта с указанным ID в магазине нет"));
+            storageService.getProductById(id).orElseThrow(NoSuchProductException::new);
         }
     }
 
     public UserBasket getUserBasket() {
         List<BasketItem> basketItems = new ArrayList<>();
         for (UUID variable : productBasket.getProductBasket().keySet()) {
-            Optional<Product> prod = storageService.getAllProducts().stream().filter(product -> product.getId().equals(variable)).findFirst();
+            Optional<Product> prod = storageService.getAllProducts().stream()
+                    .filter(product -> product.getId().equals(variable)).findFirst();
             basketItems.add(new BasketItem(prod.get(), productBasket.getProductBasket().get(variable)));
         }
         return new UserBasket(basketItems);
-    }
-}
+    } }

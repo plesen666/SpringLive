@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.stream;
+
+import static java.util.Arrays.*;
 
 @Service
 public class StorageService {
@@ -19,8 +20,10 @@ public class StorageService {
     private final Map<UUID, Article> storageArticle;
 
     public StorageService(Map<UUID, Product> storageProduct, Map<UUID, Article> storageArticle) {
-        this.storageProduct = new HashMap<>(test().values().stream().filter(product -> product.getContentType().equals("PRODUCT")).collect(Collectors.toMap(Searchable::getId, product -> (Product) product)));
-        this.storageArticle = new HashMap<>(test().values().stream().filter(product -> product.getContentType().equals("ARTICLE")).collect(Collectors.toMap(Searchable::getId, product -> (Article) product)));
+        this.storageProduct = new HashMap<>(test().values().stream().filter(product -> product.getContentType()
+                .equals("PRODUCT")).collect(Collectors.toMap(Searchable::getId, product -> (Product) product)));
+        this.storageArticle = new HashMap<>(test().values().stream().filter(product -> product.getContentType()
+                .equals("ARTICLE")).collect(Collectors.toMap(Searchable::getId, product -> (Article) product)));
     }
 
     public Collection<Product> getAllProducts() {
@@ -39,12 +42,14 @@ public class StorageService {
     }
 
     public Map<UUID, Product> availableProducts(UUID id) {
-        return storageProduct.keySet().stream().filter(Objects::nonNull).filter(o -> o.equals(id)).collect(Collectors.toMap(o -> o, storageProduct::get));
+        return storageProduct.keySet().stream().filter(Objects::nonNull)
+                .filter(o -> o.equals(id)).collect(Collectors.toMap(o -> o, storageProduct::get));
 
     }
 
     public Optional<Product> getProductById(UUID id) {
-        return Optional.ofNullable(availableProducts(id).get(id));
+        Product product = Optional.ofNullable(availableProducts(id).get(id)).orElseThrow(NoSuchProductException::new);
+        return Optional.ofNullable(product);
     }
 
     private static Map<UUID, Searchable> test() {
@@ -98,5 +103,4 @@ public class StorageService {
         testArray = stream(articles).collect(Collectors.toMap(Searchable::getId, product -> product));
         testArray.putAll(stream(products).collect(Collectors.toMap(Searchable::getId, product -> product)));
         return testArray;
-    }
-}
+    } }
