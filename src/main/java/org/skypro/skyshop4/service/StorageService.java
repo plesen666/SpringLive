@@ -5,6 +5,7 @@ import org.skypro.skyshop4.model.product.DiscountedProduct;
 import org.skypro.skyshop4.model.product.FixPriceProduct;
 import org.skypro.skyshop4.model.product.Product;
 import org.skypro.skyshop4.model.product.SimpleProduct;
+import org.skypro.skyshop4.model.search.SearchResult;
 import org.skypro.skyshop4.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
@@ -103,4 +104,8 @@ public class StorageService {
         testArray = stream(articles).collect(Collectors.toMap(Searchable::getId, product -> product));
         testArray.putAll(stream(products).collect(Collectors.toMap(Searchable::getId, product -> product)));
         return testArray;
-    } }
+    }
+
+    public List<SearchResult> getSearchableItems() {
+    }
+}
