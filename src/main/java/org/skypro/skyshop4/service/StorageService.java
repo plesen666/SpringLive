@@ -1,17 +1,16 @@
 package org.skypro.skyshop4.service;
 
+import org.skypro.skyshop4.exeption.NoSuchProductException;
 import org.skypro.skyshop4.model.article.Article;
 import org.skypro.skyshop4.model.product.DiscountedProduct;
 import org.skypro.skyshop4.model.product.FixPriceProduct;
 import org.skypro.skyshop4.model.product.Product;
 import org.skypro.skyshop4.model.product.SimpleProduct;
-import org.skypro.skyshop4.model.search.SearchResult;
 import org.skypro.skyshop4.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 
 import static java.util.Arrays.*;
 
@@ -52,6 +51,7 @@ public class StorageService {
         Product product = Optional.ofNullable(availableProducts(id).get(id)).orElseThrow(NoSuchProductException::new);
         return Optional.ofNullable(product);
     }
+
 
     private static Map<UUID, Searchable> test() {
         Product[] products = {
@@ -104,8 +104,5 @@ public class StorageService {
         testArray = stream(articles).collect(Collectors.toMap(Searchable::getId, product -> product));
         testArray.putAll(stream(products).collect(Collectors.toMap(Searchable::getId, product -> product)));
         return testArray;
-    }
-
-    public List<SearchResult> getSearchableItems() {
     }
 }

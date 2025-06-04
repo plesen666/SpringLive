@@ -1,4 +1,5 @@
-package org.skypro.skyshop4.model.search;
+package org.skypro.skyshop4.model;
+import org.skypro.skyshop4.model.search.Searchable;
 
 import java.util.UUID;
 
@@ -20,12 +21,9 @@ public class SearchResult {
         return new SearchResult(id, nameProduct, contentType);
     }
 
+
     @Override
     public String toString() {
-        return "SearchResult{" +
-                "id=" + id +
-                ", nameProduct='" + nameProduct + '\'' +
-                ", contentType='" + contentType + '\'' +
-                '}';
+        return String.format("%6s%21s%15s%25s%15s%15s%2s", "id=", id.toString(), " nameProduct=", nameProduct, "contentType='", contentType, "\n");
     }
 }

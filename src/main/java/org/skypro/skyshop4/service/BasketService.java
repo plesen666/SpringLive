@@ -8,7 +8,6 @@ import org.skypro.skyshop4.model.product.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
 @Service
 public class BasketService {
     private final ProductBasket productBasket;
@@ -35,4 +34,5 @@ public class BasketService {
             basketItems.add(new BasketItem(prod.get(), productBasket.getProductBasket().get(variable)));
         }
         return new UserBasket(basketItems);
-    } }
+    }
+}

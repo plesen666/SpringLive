@@ -1,6 +1,5 @@
 package org.skypro.skyshop4;
 
-
 import org.junit.jupiter.api.Test;
 import org.skypro.skyshop4.model.article.Article;
 import org.skypro.skyshop4.model.product.Product;

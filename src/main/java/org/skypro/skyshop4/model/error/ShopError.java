@@ -9,6 +9,7 @@ public class ShopError {
         this.code = code;
         this.message = message;
     }
+
     @Override
     public String toString() {
         return "ShopError{" + "code='" + code + ", message='" + message + " }";
